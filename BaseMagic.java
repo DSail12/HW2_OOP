@@ -1,12 +1,37 @@
 package OOP_2;
 
+import java.util.ArrayList;
+
 public class BaseMagic extends BaseUnit {
     private int mana;
 
     public BaseMagic(String type, String name, int attack, int defense,
-            int[] damage, int health, int speed, int mana) {
-        super(type, name, attack, defense, damage, health, speed);
+            int[] damage, int maxHealth, int speed, int mana) {
+        super(type, name, attack, defense, damage, maxHealth, speed);
         this.mana = mana;
+    }
+
+    @Override
+    public void step(ArrayList<BaseUnit> list) {
+        int index = 0;
+        int min = list.get(0).getHealth();
+        for (int i = 0; i < list.size(); i++) {
+            if (min > list.get(i).getHealth()) {
+                min = list.get(i).getHealth();
+                index = i;
+            }
+        }
+
+        int addHealth = (-1) * this.getDamage()[0] * 100 / list.get(index).getMaxHealth(); 
+        System.out.println("\n--------------------");
+        System.out.println("Юнит -" + this.getType() + "- по имени '" + this.getName() + "' лечит -"
+                + list.get(index).getType() + "- по имени '" + list.get(index).getName() + "' здоровье которого "
+                + list.get(index).getHealth() + "% на " + this.getDamage()[0] * (-1) + " пункта (" + addHealth + "%)");
+
+        list.get(index).setHealth(list.get(index).getHealth() + addHealth);
+        System.out.print("Раненый вылечен: ");
+        System.out.println(list.get(index));
+
     }
 
     @Override
@@ -14,7 +39,7 @@ public class BaseMagic extends BaseUnit {
         return super.toString() + " {Магия: " + mana + "}";
     }
 
-    public int getMana(){
+    public int getMana() {
         return mana;
     }
 }
