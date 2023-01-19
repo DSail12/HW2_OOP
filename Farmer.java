@@ -1,5 +1,6 @@
 package OOP_2;
 
+
 public class Farmer extends BaseUnit {
     private int supply;
 
@@ -16,5 +17,4 @@ public class Farmer extends BaseUnit {
     public int getSupply(){
         return supply;
     }
-
 }

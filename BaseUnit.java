@@ -1,6 +1,11 @@
 package OOP_2;
+
+import java.util.ArrayList;
 import java.util.Arrays;
-public class BaseUnit {
+import java.util.Random;
+
+
+public abstract class BaseUnit implements interface1 {
     
     private String type;
     private String name;
@@ -8,18 +13,28 @@ public class BaseUnit {
     private int defense;
     private int[] damage;
     private int health;
+    private int maxHealth;
     private int speed;
 
     public BaseUnit(String type, String name, int attack, int defense,
-            int[] damage, int health, int speed) {
+            int[] damage, int maxHealth, int speed) {
 
         this.type = type;
         this.name = name;
         this.attack = attack;
         this.defense = defense;
         this.damage = damage;
-        this.health = health;
+        this.maxHealth = maxHealth;
+        this.health = (this.maxHealth - new Random().nextInt(this.maxHealth)) * 100 / this.maxHealth;
         this.speed = speed;
+    }
+    @Override
+    public void step(ArrayList<BaseUnit> list) {
+    };
+
+    @Override
+    public String getInfo() {
+        return null;
     }
 
     @Override
@@ -44,11 +59,17 @@ public class BaseUnit {
     public int[] getDamage(){
         return damage;
     }
+    public int getMaxHealth() {
+        return maxHealth;   
+    }
     public int getHealth(){
         return health;
     }
     public int getSpeed(){
         return speed;
+    }
+    public void setHealth(int health) {
+        this.health = health;
     }
 
 }

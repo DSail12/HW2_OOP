@@ -9,11 +9,18 @@
 package OOP_2;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Main {
-    public static ArrayList<BaseUnit> personList = new ArrayList<>();
+    public static ArrayList<BaseUnit> personList1 = new ArrayList<>();
+    public static ArrayList<BaseUnit> personList2 = new ArrayList<>();
 
-    public static void getEqual(String unitType) {
+    public static String getName(){
+        Random random = new Random();
+        return EnumeratorSurnames.values()[random.nextInt(EnumeratorSurnames.values().length)] + " " + EnumeratorNames.values()[random.nextInt(EnumeratorNames.values().length)];
+    }
+
+    public static void getEqual(String unitType, ArrayList<BaseUnit> personList) {
         for (var item : personList) {
             if (item.getClass().getName().equals(unitType)) {
                 System.out.print(item);
@@ -22,51 +29,55 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Generator generator = new Generator();
 
-        for (int i = 0; i < 50; i++) {
-            switch (generator.getUnitType()) {
-                case "crosbowman":
-                    personList.add(new Crossbowman(generator.getName()));
+        for (int i = 0; i < 10; i++) {
+            switch (new Random().nextInt(4)) {
+                case 0:
+                personList1.add(new Farmer(getName()));
+
                     break;
-                case "thug":
-                    personList.add(new Thug(generator.getName()));
+                case 1:
+                    personList1.add(new Thug(getName()));
                     break;
-                case "farmer":
-                    personList.add(new Farmer(generator.getName()));
+                case 2:
+                    personList1.add(new Sniper(getName()));
                     break;
-                case "wizard":
-                    personList.add(new Wizard(generator.getName()));
+                case 3:
+                    personList1.add(new Wizard(getName()));
                     break;
-                case "monk":
-                    personList.add(new Monk(generator.getName()));
+            }
+        }
+        for (int i = 0; i < 10; i++) {
+            switch (new Random().nextInt(4)) {
+                case 0:
+                    personList2.add(new Farmer(getName()));
                     break;
-                case "pikeman":
-                    personList.add(new Pikeman(generator.getName()));
+                case 1:
+                    personList2.add(new Pikeman(getName()));
                     break;
-                case "sniper":
-                    personList.add(new Sniper(generator.getName()));
+                case 2:
+                    personList2.add(new Crossbowman(getName()));
                     break;
-                default:
-                    System.out.println("ошибка. такого персонажа нет.");
+                case 3:
+                    personList2.add(new Monk(getName()));
                     break;
+
             }
         }
 
         System.out.println("\n--------------------");
-        System.out.println("Вывод всего списка:");
-        System.out.print(personList);
+        System.out.println("Вывод списка 1:");
+        System.out.print(personList1);
         System.out.println("\n--------------------");
         System.out.println("Вывод по персонажам: ");
 
-        getEqual("Crossbowman");
-        getEqual("Thug");
-        getEqual("Farmer");
-        getEqual("Wizard");
-        getEqual("Monk");
-        getEqual("Pikeman");
-        getEqual("Sniper");
+        Wizard wiz1 = new Wizard("Лекарь Петр");
+        wiz1.step(personList1);
 
+        System.out.println("\n--------------------");
+        System.out.println("Вывод списка 2:");
+        System.out.print(personList2);
+        Monk monk1 = new Monk("Монах Серафим");
+        monk1.step(personList2);
     }
-
 }
